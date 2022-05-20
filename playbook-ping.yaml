@@ -1,0 +1,13 @@
+---
+- name: Copy config
+  hosts: all
+  remote_user: ubuntu
+
+  tasks:
+  - name: Copy file with owner and permissions
+    copy:
+      src: ./hosts.ini
+      dest: ~/hosts.ini
+      owner: ubuntu
+      group: ubuntu
+      mode: '0644'
