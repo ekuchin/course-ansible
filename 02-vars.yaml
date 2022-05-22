@@ -1,0 +1,32 @@
+---
+- name: variables Demo
+  hosts: all
+  remote_user: ubuntu
+
+  vars:
+    myVar: "My Value"
+
+  tasks:
+  - name: Print myVar
+    debug:
+      var: myVar
+
+  - debug:
+      msg: "My constant value"
+
+  - debug:
+      msg: "This is value from var: {{myVar}}"
+
+  - debug:
+      msg: "{{ansible_distribution}} v.{{ansible_distribution_version}}"
+
+  - set_fact:
+      myMessage: "{{ansible_distribution}} v.{{ansible_distribution_version}}"
+
+  - debug:
+      msg: "{{myMessage}}"
+
+
+# Описать переменную
+# Взять переменную из фактов
+# сделать свой факт
