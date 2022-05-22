@@ -6,8 +6,15 @@
   tasks:
   - name: Copy file with owner and permissions
     copy:
-      src: ./hosts.ini
-      dest: ~/hosts.ini
+      src: ./hosts.yaml
+      dest: ~/hosts.yaml
       owner: ubuntu
       group: ubuntu
       mode: '0644'
+
+- name: Ping
+  hosts: all
+  remote_user: ubuntu
+  tasks:
+    - name: Ping
+      ping:
