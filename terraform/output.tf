@@ -1,3 +1,7 @@
-output "instance_ip_addr" {
-  value = openstack_compute_instance_v2.instance.access_ip_v4
+output "ansible_instance_ip_addr" {
+  value = [ for elem in module.ansible.instance_ip_addr : elem ]
+}
+
+output "remote_instance_ip_addr" {
+  value = [ for elem in module.remote.instance_ip_addr : elem ]
 }
