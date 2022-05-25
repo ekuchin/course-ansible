@@ -1,5 +1,5 @@
 ---
-- name: Loop Demo
+- name: Loops & Conditions Demo
   hosts: all
 
   vars:
@@ -8,12 +8,14 @@
       - ansible
       - htop
 
+#Loops
+
   tasks:
   - name: Install latest packages
     apt:
       name: "{{package_list}}"
       state: latest
-  
+
   - name: Install latest packages (Loop)
     apt:
       name: "{{item}}"
@@ -28,3 +30,47 @@
       - {name: mc, state: latest}
       - {name: ansible, state: latest}
       - {name: htop, state: latest}
+
+#Conditions
+
+  - name: Conditional task (Debian)
+    apt:
+      name: "{{package_list}}"
+      state: latest
+    when: ansible_os_family == "Debian"
+
+  - name: Conditional task (RedHat)
+    yum:
+      name: "{{package_list}}"
+      state: latest
+    when: ansible_os_family == "RedHat"
+    
+#Block
+
+  - name: Block Tasks
+    block:
+      - name: Install latest packages (Block)
+        apt:
+          name: "{{package_list}}"
+          state: latest
+
+      - name: Install latest packages (Block Loop)
+        apt:
+          name: "{{item}}"
+          state: latest
+        loop: "{{package_list}}"
+    when: ansible_os_family == "Debian"
+
+# Handlers
+
+  - name: Task using handler
+    file:
+      path: "/home/ubuntu/newdir"
+      state: directory
+    notify: reboot_server
+
+  handlers:
+
+  - name: reboot_server
+    debug:
+      msg: "Message from handler"
