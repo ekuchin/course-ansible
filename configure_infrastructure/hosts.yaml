@@ -1,0 +1,17 @@
+---
+all:
+  children:
+    ansible:
+      hosts:
+        ansible-0:
+          ansible_host: "185.86.144.128"
+        ansible-1:
+          ansible_host: "89.208.209.118"
+    remote:
+      hosts:
+        remote-0:
+          ansible_host: "89.208.211.234"
+        remote-1:
+          ansible_host: "185.86.146.158"
+        remote-2:
+          ansible_host: "185.86.145.97"

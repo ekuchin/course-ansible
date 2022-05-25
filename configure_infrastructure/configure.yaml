@@ -1,0 +1,45 @@
+---
+- name: Configure Ansible Management Hosts
+  hosts: ansible
+
+  vars:
+    package_list:
+      - ansible
+      - mc
+    key_file_name: ~/.ssh/mcs.ppk
+
+  tasks:
+
+# Install Packages
+
+  - name: Install Packages (RedHat)
+    yum:
+      name: "{{item}}"
+      state: latest
+    loop: "{{package_list}}"
+    become: true
+    when: ansible_os_family == "RedHat"
+
+  - name: Install Packages (Debian)
+    yum:
+      name: "{{item}}"
+      state: latest
+    loop: "{{package_list}}"  
+    become: true
+    when: ansible_os_family == "Debian"
+
+# Copy ppk 
+
+  - name: Copy file with owner and permissions
+    copy:
+      src: "{{key_file_name}}"
+      dest: "{{key_file_name}}"
+      mode: "0644"
+
+# Ping 
+
+- name: Ping
+  hosts: remote
+  tasks:
+    - name: Ping
+      ping:
