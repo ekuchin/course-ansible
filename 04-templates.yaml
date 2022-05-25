@@ -1,0 +1,16 @@
+---
+- name: Loops & Conditions Demo
+  hosts: all
+
+  vars:
+    package_list:
+      - mc
+      - ansible
+      - htop
+
+  tasks:
+  - name: Create config by template    
+    template:
+      src: ./template.j2
+      dest: /home/ubuntu/kea.cfg
+      mode: 0644
