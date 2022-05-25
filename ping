@@ -1,2 +1,0 @@
-#ansible all -m ping -i ./hosts.yaml -v
-ansible all -i ./hosts.yaml -v -a "ip a"

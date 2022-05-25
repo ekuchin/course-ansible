@@ -1,6 +1,6 @@
 all:
   hosts:
     ansible.ekuchin.ru:
-      ansible_host: "185.86.146.121"
+      ansible_host: "185.86.144.128"
       ansible_user: "ubuntu"
       ansible_ssh_private_key_file: "~/.ssh/mcs.ppk"
