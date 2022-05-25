@@ -8,28 +8,7 @@
       - ansible
       - htop
 
-#Loops
-
   tasks:
-  - name: Install latest packages
-    apt:
-      name: "{{package_list}}"
-      state: latest
-
-  - name: Install latest packages (Loop)
-    apt:
-      name: "{{item}}"
-      state: latest
-    loop: "{{package_list}}"
-     
-  - name: Install latest packages (With)
-    apt:
-      name: "{{item.name}}"
-      state: "{{item.state}}"
-    with_items:
-      - {name: mc, state: latest}
-      - {name: ansible, state: latest}
-      - {name: htop, state: latest}
 
 #Conditions
 
@@ -60,17 +39,3 @@
           state: latest
         loop: "{{package_list}}"
     when: ansible_os_family == "Debian"
-
-# Handlers
-
-  - name: Task using handler
-    file:
-      path: "/home/ubuntu/newdir"
-      state: directory
-    notify: reboot_server
-
-  handlers:
-
-  - name: reboot_server
-    debug:
-      msg: "Message from handler"

@@ -1,0 +1,52 @@
+---
+- name: Loops & Conditions Demo
+  hosts: all
+
+  vars:
+    package_list:
+      - mc
+      - ansible
+      - htop
+    base_directory: "/home/ubuntu/newdir"
+    directory_list:
+      - dir-1
+      - dir-2
+    subdir_list:
+      - subdir-1
+      - subdir-2
+
+  tasks:
+  - name: Install latest packages
+    apt:
+      name: "{{package_list}}"
+      state: latest
+
+  - name: Install latest packages (Loop)
+    apt:
+      name: "{{item}}"
+      state: latest
+    loop: "{{package_list}}"
+     
+  - name: Install latest packages (With)
+    apt:
+      name: "{{item.name}}"
+      state: "{{item.state}}"
+    with_items:
+      - {name: mc, state: latest}
+      - {name: ansible, state: latest}
+      - {name: htop, state: latest}
+
+  - name: Create directories
+    file:
+      name: "{{base_directory}}/{{item}}"
+      state: directory
+    loop: "{{directory_list}}"
+
+  - name: Create files
+    file:
+      name: "{{base_directory}}/{{item[0]}}/{{item[1]}}"
+      state: directory
+    with_nested:
+      - "{{directory_list}}"
+      - "{{subdir_list}}"
+  

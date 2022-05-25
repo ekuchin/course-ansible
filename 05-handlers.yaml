@@ -1,0 +1,25 @@
+---
+- name: Loops & Conditions Demo
+  hosts: all
+
+  vars:
+    package_list:
+      - mc
+      - ansible
+      - htop
+
+  tasks:
+
+# Handlers
+
+  - name: Task using handler
+    file:
+      path: "/home/ubuntu/newdir"
+      state: directory
+    notify: reboot_server
+
+  handlers:
+
+  - name: reboot_server
+    debug:
+      msg: "Server will be rebooted !!"

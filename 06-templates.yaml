@@ -11,6 +11,6 @@
   tasks:
   - name: Create config by template    
     template:
-      src: ./template.j2
+      src: ./06-template.j2
       dest: /home/ubuntu/kea.cfg
       mode: 0644
