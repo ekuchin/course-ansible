@@ -1,0 +1,46 @@
+---
+- hosts: all
+  become: yes
+  
+  vars:
+    server_name: "{{ ansible_default_ipv4.address }}"
+    document_root: /var/www
+    github_account: ekuchin
+    app_name: vue-site
+
+  tasks:
+
+    - name: Update apt cache and install Nginx
+      apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+
+    - git:
+        repo: https://github.com/{{ github_account }}/{{ app_name }}.git
+        dest: "{{document_root}}/{{ app_name }}"
+
+    - name: Apply Nginx template
+      template:
+        src: 08-nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Restart Nginx
+
+    - name: Enable new site
+      file:
+        src: /etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+      notify: Restart Nginx
+
+    - name: Allow all access to tcp port 80
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
