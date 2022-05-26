@@ -1,0 +1,6 @@
+---
+# tasks file for file-role
+- name: Copy files
+  synchronize:
+    src: files/
+    dest: "{{base_directory}}"

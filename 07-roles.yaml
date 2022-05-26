@@ -1,0 +1,6 @@
+---
+- name: Using file-role  
+  hosts: all
+  roles:
+    - role: file-role
+      base_directory: "/home/ubuntu/keadir"
