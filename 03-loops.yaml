@@ -42,7 +42,7 @@
       state: directory
     loop: "{{directory_list}}"
 
-  - name: Create files
+  - name: Create subdirectories
     file:
       name: "{{base_directory}}/{{item[0]}}/{{item[1]}}"
       state: directory
